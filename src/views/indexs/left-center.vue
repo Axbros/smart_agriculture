@@ -13,17 +13,12 @@
 </template>
 
 <script>
-import { currentGET } from 'api/modules'
+import { todayInspectInfo } from 'api/modules'
 export default {
   data() {
     return {
       options: {},
-      countUserNumData: {
-        lockNum: 0,
-        onlineNum: 0,
-        offlineNum: 0,
-        totalNum: 0
-      },
+      detail: [],
       pageflag: true,
       timer: null
     };
@@ -46,15 +41,15 @@ export default {
     },
     getData() {
       this.pageflag = true
-      // this.pageflag =false
-
-      currentGET('big1').then(res => {
+      todayInspectInfo().then(res => {
         //只打印一次
         if (!this.timer) {
-          console.log("设备总览", res);
+          console.log("!this.timer", res);
         }
-        if (res.success) {
-          this.countUserNumData = res.data
+        if (res.code == 1) {
+
+          this.detail = res.data[0].detail;
+          console.log(this.detail)
           this.$nextTick(() => {
             this.init()
           })
@@ -68,30 +63,34 @@ export default {
         }
       })
     },
-    //轮询
-    switper() {
-      if (this.timer) {
-        return
-      }
-      let looper = (a) => {
-        this.getData()
-      };
-      this.timer = setInterval(looper, this.$store.state.setting.echartsAutoTime);
-      let myChart = this.$refs.charts.chart
-      myChart.on('mouseover', params => {
-        this.clearData()
-      });
-      myChart.on('mouseout', params => {
-        this.timer = setInterval(looper, this.$store.state.setting.echartsAutoTime);
-      });
-    },
     init() {
       this.options = {
-        legend: {
-          top: 'bottom',
-          textStyle:{
-            fontSize:18
+        textStyle: {
+          fontFamily: "sans-serif",
+          fontSize: 18,
+          fontStyle: "normal",
+          fontWeight: "20",
+        },
+        tooltip: {
+          trigger: 'item',
+          formatter: '{a} <br/>{b} : {c} ({d}%)'
+        },
+        toolbox: {
+          show: true,
+          feature: {
+            mark: { show: true },
+            dataView: { show: true, readOnly: false },
+            restore: { show: true },
+
           }
+        },
+        // legend: {
+        //   top: 'bottom',
+        //   left: "center"
+        // },
+        label: {
+          show: true,
+          // fontSize: 20 // 修改为需要的字体大小
         },
         series: [
           {
@@ -103,17 +102,8 @@ export default {
             itemStyle: {
               borderRadius: 8
             },
-            label: {
-            show: true,
-            fontSize: 18 // 修改为需要的字体大小
-        },
-            data: [
-              { value: 40, name: '大蟒蛇' },
-              { value: 38, name: '草履虫' },
-              { value: 32, name: '蟑螂' },
-              { value: 30, name: '老鼠' },
-              { value: 28, name: '蜥蜴' },
-            ]
+
+            data: this.detail
           }
         ]
       };
@@ -121,8 +111,4 @@ export default {
   },
 };
 </script>
-<style lang='scss' scoped>
-
-
-
-</style>
+<style lang='scss' scoped></style>
