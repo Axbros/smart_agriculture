@@ -12,8 +12,7 @@
         <!-- <div class="item">实时监测</div> -->
 
       </div>
-      <ItemWrap class="contetn_left-top contetn_lr-item" title="病虫害预警" :left="leftTopLeftArray"
-        :right="leftTopRightArray">
+      <ItemWrap class="contetn_left-top contetn_lr-item" title="病虫害预警" :options="leftTopOption">
         <!-- <select >
           <option>环境监测</option>
           <option>病虫害预警</option>
@@ -29,7 +28,7 @@
     </div>
     <div class="contetn_center">
     
-        <CenterMap  :left="leftBottomLeftArray" :right="leftBottomRightArray" title="人员闯入识别" />
+        <CenterMap  :options="leftBottomOption" title="防火监测" />
     
 
       <ItemWrap class="contetn_center-bottom" title="AI巡园预警">
@@ -40,7 +39,7 @@
       <ItemWrap class="contetn_left-bottom contetn_lr-item" title="园区生产情况">
         <RightTop />
       </ItemWrap>
-      <ItemWrap class="contetn_left-bottom contetn_lr-item"   title="气象监测" :left=centerBottomLeftArray :right="centerBottomRightArray" style="padding: 0 10px 16px 10px">
+      <ItemWrap class="contetn_left-bottom contetn_lr-item"   title="气象监测" :options="centerBottomOption" style="padding: 0 10px 16px 10px">
         <RightCenter />
       </ItemWrap>
       <ItemWrap class="contetn_left-bottom contetn_lr-item" title="土壤监测 ">
@@ -73,12 +72,18 @@ export default {
   },
   data() {
     return {
-      leftTopLeftArray: ['环境监测'],
-      leftTopRightArray: ['病虫害预警'],
-      leftBottomLeftArray: '农机作业识别',
-      leftBottomRightArray: '烟雾防火识别',
-      centerBottomLeftArray: ['温度', '湿度'],
-      centerBottomRightArray: ['风速', '气压', '日照时间']
+      leftTopOption:{
+        leftArray:['土壤监测'],
+        rightArray:['气象预警'],
+      },
+      leftBottomOption:{
+        leftArray:['虫情监测','苗情监测'],
+        rightArray:['农机监测','人员监测'],
+      },
+      centerBottomOption:{
+        leftArray:['温度', '湿度'],
+        rightArray:['风速', '气压', '日照时间']
+      }
     };
   },
   filters: {

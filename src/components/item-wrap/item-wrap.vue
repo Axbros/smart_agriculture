@@ -9,7 +9,7 @@
   <dv-border-box-13 class="lr_titles">
     <div class="item_title" v-if="title !== ''">
       <ul class="horizontal-list">
-        <li v-for="i in left">{{i}}</li>
+        <li v-for="i in options.leftArray">{{i}}</li>
       </ul>
       <div class="left">
       </div>
@@ -17,7 +17,7 @@
       <span class="title-inner"> &nbsp;&nbsp;{{ title }}&nbsp;&nbsp; </span>
       <div class="right"></div>
       <ul class="horizontal-list">
-        <li v-for="i in right">{{i}}</li>
+        <li v-for="i in options.rightArray">{{i}}</li>
       </ul>
     </div>
     <div
@@ -38,14 +38,13 @@ export default {
       type: String,
       default: () => "",
     },
-    left:{
-      type:Array,
-      default:[]
+    options:{
+      type:Object,
+      default:{
+        leftArray:[],
+        rightArray:[],  
+      }
     },
-    right:{
-      type:Array,
-      default:[]
-    }
   },
   created() {},
 

@@ -8,9 +8,9 @@
 <template>
   <div class="centermap">
     <div class="maptitle">
-      <div class="left">{{left}}</div>
+      <div class="left" v-for="i in options.leftArray">{{i}}</div>
       <span class="titletext">{{ title }}</span>
-      <div class="right">{{right}}</div>
+      <div class="right" v-for="i in options.rightArray">{{i}}</div>
     </div>
     <div class="mapwrap">
       <dv-border-box-13>
@@ -36,13 +36,12 @@ export default {
       type: String,
       default: () => "",
     },
-    left:{
-      type:String,
-      default:() => "",
-    },
-    right:{
-      type:String,
-      default:() => "",
+    options:{
+      type:Object,
+      default:{
+        leftArray:[],
+        rightArray:[],  
+      }
     }
   },
   data() {
