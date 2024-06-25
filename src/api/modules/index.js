@@ -1,8 +1,9 @@
 
 import * as API from "../api";
+import { getCurrentDate,xDaysAgo } from "@/utils/getToday";
 
 export const paramType ={
-    'leftCenter':'/insect_condition/insectStress',
+    'insectInfo':'/insect_condition/insectStress',
     'big1':"/bigscreen/countUserNum", //用户总览
     'big2':"/bigscreen/countDeviceNum", //设备总览 
     'big3':"/bigscreen/sbtx", //设备提醒
@@ -15,7 +16,14 @@ export const paramType ={
 }
 
 export const todayInspectInfo=()=>{
-    return API.GET(paramType['leftCenter'])
+    return API.GET(paramType['insectInfo'])
+}
+export const insectPressure=(days)=>{
+    const params={
+        startDate:xDaysAgo(days),
+        days:days
+    }
+    return  API.GET(paramType['insectInfo'],params)
 }
 /******************      通用增删改查       ********************* */
 /**

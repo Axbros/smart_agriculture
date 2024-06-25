@@ -46,7 +46,7 @@ export default {
         if (!this.timer) {
           console.log("!this.timer", res);
         }
-        if (res.code == 1) {
+        if (res.code == 200) {
 
           this.detail = res.data[0].detail;
           console.log(this.detail)
