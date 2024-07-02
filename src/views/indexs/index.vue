@@ -28,7 +28,7 @@
     </div>
     <div class="contetn_center">
     
-        <CenterMap  :options="leftBottomOption" title="防火监测" />
+        <CenterMap  :options="leftBottomOption" title="魔镜慧眼" />
     
 
       <ItemWrap class="contetn_center-bottom" title="AI巡园预警">
@@ -39,7 +39,7 @@
       <ItemWrap class="contetn_left-bottom contetn_lr-item" title="园区生产情况">
         <RightTop />
       </ItemWrap>
-      <ItemWrap class="contetn_left-bottom contetn_lr-item"   title="气象监测" :options="centerBottomOption" style="padding: 0 10px 16px 10px">
+      <ItemWrap class="contetn_left-bottom contetn_lr-item"   title="风速" :options="centerBottomOption" style="padding: 0 10px 16px 10px">
         <RightCenter />
       </ItemWrap>
       <ItemWrap class="contetn_left-bottom contetn_lr-item" title="土壤监测 ">
@@ -82,7 +82,7 @@ export default {
       },
       centerBottomOption:{
         leftArray:['温度', '湿度'],
-        rightArray:['风速', '气压', '日照时间']
+        rightArray:[ '气压', '日照时间']
       }
     };
   },

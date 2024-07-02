@@ -4,9 +4,9 @@ import { getCurrentDate,xDaysAgo } from "@/utils/getToday";
 
 export const paramType ={
     'insectInfo':'/insect_condition/insectStress',
-    'big1':"/bigscreen/countUserNum", //用户总览
-    'big2':"/bigscreen/countDeviceNum", //设备总览 
-    'big3':"/bigscreen/sbtx", //设备提醒
+    'climate_condition':"/climate_condition/daqishangqing", //用户总览
+    'center':"/monitors/identifyingPhotos", //设备总览 
+    'big2':"/bigscreen/countDeviceNum", //设备提醒
     'big4':"/bigscreen/alarmNum", //报警次数
     'big5':'/bigscreen/ssyj',//实时预警 
     'big6':'/bigscreen/installationPlan',// 安装计划
@@ -24,6 +24,16 @@ export const insectPressure=(days)=>{
         days:days
     }
     return  API.GET(paramType['insectInfo'],params)
+}
+
+export const climate_condition=(type)=>{
+    const params={
+        type
+    }
+    return API.GET(paramType["climate_condition"],params)
+}
+export const centerRequest=()=>{
+    return API.GET(paramType["center"])
 }
 /******************      通用增删改查       ********************* */
 /**

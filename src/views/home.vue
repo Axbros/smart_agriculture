@@ -23,7 +23,7 @@
           <div class="guang"></div>
           <div class="d-flex jc-center">
             <div class="title">
-              <span class="title-text">智慧农作物园区可视化平台</span>
+              <span class="title-text">现代农业产业园数字化展示平台</span>
             </div>
           </div>
           <div class="timers">

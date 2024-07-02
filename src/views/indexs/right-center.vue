@@ -8,6 +8,7 @@
 import * as echarts from 'echarts';
 import { currentGET } from "api";
 import { graphic } from "echarts";
+import {climate_condition} from "api/modules"
 export default {
   data() {
     return {
@@ -21,8 +22,10 @@ export default {
   methods: {
     getData() {
       this.pageflag = true;
-      currentGET("big6", { companyName: this.companyName }).then((res) => {
-        if (res.success) {
+      // 温度的key是e3    湿度是e9   风速e7   气压就e5  日照e11
+      climate_condition("e7").then((res) => {
+        if (res.code===200) {
+          console.log(res.data)
           this.init(res.data);
         } else {
           this.pageflag = false;
@@ -39,7 +42,7 @@ export default {
         xAxis: {
           type: 'category',
           boundaryGap: false,
-          data: ['05-31', '06-01', '06-02', '06-03', '06-04', '06-05', '06-06']
+          data: newData.map(r=>r.date)
         },
         yAxis: {
           type: 'value'
@@ -49,7 +52,7 @@ export default {
         },
         series: [
           {
-            data: [-20, 12, 20, 21, 24, 10, 8],
+            data: newData.map(r=>r.value),
             type: 'line',
             areaStyle: {},
             itemStyle: {
