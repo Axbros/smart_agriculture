@@ -6,6 +6,7 @@ export const paramType ={
     'insectInfo':'/insect_condition/insectStress',
     'climate_condition':"/climate_condition/daqishangqing", //用户总览
     'center':"/monitors/identifyingPhotos", //设备总览 
+    'detect_solid':"/soilMoisture/today",
     'big2':"/bigscreen/countDeviceNum", //设备提醒
     'big4':"/bigscreen/alarmNum", //报警次数
     'big5':'/bigscreen/ssyj',//实时预警 
@@ -17,6 +18,9 @@ export const paramType ={
 
 export const todayInspectInfo=()=>{
     return API.GET(paramType['insectInfo'])
+}
+export const todaySolidDetect=()=>{
+    return API.GET(paramType['detect_solid'])
 }
 export const insectPressure=(days)=>{
     const params={

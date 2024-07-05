@@ -7,7 +7,7 @@
  */
 let UtilVar = {
     ENC: false, //返回结果是否加密
-    baseUrl: 'http://1c998683.r3.cpolar.cn/',
+    baseUrl: 'http://217804cb.r2.cpolar.cn/',
     code: 401,
 }
 const runtimeType = {

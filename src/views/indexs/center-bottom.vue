@@ -15,7 +15,7 @@
             <div class="flex">
               <div class="info">
                 <span class="labels ">摄像头ID：</span>
-                <span class="contents primary"> 888888</span>
+                <span class="contents primary"> 1639</span>
               </div>
               <div class="info" style="margin-left:36px">
                 <span class="labels">地址：</span>

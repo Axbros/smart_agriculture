@@ -6,30 +6,61 @@
  * @FilePath: \web-pc\src\pages\big-screen\view\indexs\right-center.vue
 -->
 <template>
-  <div class="right_center_wrap beautify-scroll-def" >
+  <div class="right_center_wrap beautify-scroll-def">
     <div class="container">
       <div class="data-box">
-          <span>温度: 16.7°C</span>
-          <span>湿度: 74.6%RH</span>
-          <span>PH值: 6.32</span>
-          <span>盐分电导率: 68mS/cm</span>
+        <span>温度:{{ info.soilTemperature }} °C</span>
+        <span>湿度: {{ info.soilMoisture }}%RH</span>
+        <span>PH值: {{ info.soilPh }}</span>
+        <span>盐分电导率: {{ info.soilConductivity }}mS/cm</span>
       </div>
       <div class="graph">
-          <img src="../../assets/img/earth.png" alt="Graph Image">
-          <div class="tooltip">
-              <span>05-11</span>
-              <span>温度</span>
-              <span>PH值: 6.35</span>
-          </div>
+        <img src="../../assets/img/earth.png" alt="Graph Image">
+        <div class="tooltip">
+          <span>{{ info.acquisitionTime.slice(0, 10) }}<br/><br/></span>
+          <span>土壤碱解氮:{{ info.soilAlkalineHydrolyzedNitrogen }}<br/><br/></span>
+          <span>士壤有效磷: {{ info.soilAvailablePhosphorus }}<br/><br/></span>
+          <span>土壤有效钾: {{ info.soilAvailablePotassium }}<br/><br/></span>
+        </div>
       </div>
-  </div>
+    </div>
   </div>
 
 
 </template>
 
 <script>
-
+import { todaySolidDetect } from "@/api/modules"
+export default {
+  data() {
+    return {
+      info: {
+        "id": 1720168501175,
+        "deviceId": "32FFDC055241333741662451",
+        "type": "0",
+        "layers": 0,
+        "acquisitionTime": "2024-07-05 16:32:39",
+        "soilTemperature": 23.1,
+        "soilMoisture": 27.8,
+        "soilPh": 7.4,
+        "soilConductivity": 72,
+        "soilAlkalineHydrolyzedNitrogen": 12,
+        "soilAvailablePhosphorus": 14,
+        "soilAvailablePotassium": 18
+      }
+    }
+  },
+  methods: {
+    getData() {
+      todaySolidDetect().then((res) => {
+        this.info=res.data
+      })
+    }
+  },
+  mounted() {
+    this.getData()
+  }
+}
 </script>
 <style lang='scss' scoped>
 .container {
@@ -39,32 +70,38 @@
   border-radius: 10px;
   width: fit-content;
 }
+
 .data-box {
   margin-right: 20px;
 }
+
 .data-box span {
   display: block;
   margin-bottom: 10px;
 }
+
 .graph {
   position: relative;
   width: 100%;
   height: 100%;
 }
+
 .graph img {
   width: 100%;
   height: auto;
 }
+
 .tooltip {
   position: absolute;
-  bottom: 20px;
+  bottom:1.25rem;
   left: 50%;
   transform: translateX(-50%);
   background-color: rgba(0, 128, 0, 0.7);
-  padding: 5px;
+  padding: 1.2rem;
   border-radius: 5px;
   text-align: center;
 }
+
 .right_center {
   width: 100%;
   height: 100%;

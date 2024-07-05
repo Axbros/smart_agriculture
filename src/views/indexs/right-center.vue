@@ -5,9 +5,6 @@
 </template>
 
 <script>
-import * as echarts from 'echarts';
-import { currentGET } from "api";
-import { graphic } from "echarts";
 import {climate_condition} from "api/modules"
 export default {
   data() {
@@ -26,7 +23,7 @@ export default {
       climate_condition("e7").then((res) => {
         if (res.code===200) {
           console.log(res.data)
-          this.init(res.data);
+          this.init(res.data.reverse());
         } else {
           this.pageflag = false;
           this.$Message({
