@@ -9,9 +9,9 @@
   <div class="right_center_wrap beautify-scroll-def">
     <div class="container">
       <div class="data-box">
-        <span>温度:{{ info.soilTemperature }} °C</span>
-        <span>湿度: {{ info.soilMoisture }}%RH</span>
-        <span>PH值: {{ info.soilPh }}</span>
+        <span>温度: {{ info.soilTemperature }} °C</span><br/>
+        <span>湿度: {{ info.soilMoisture }}%RH</span><br/>
+        <span>PH值: {{ info.soilPh }}</span><br/>
         <span>盐分电导率: {{ info.soilConductivity }}mS/cm</span>
       </div>
       <div class="graph">
