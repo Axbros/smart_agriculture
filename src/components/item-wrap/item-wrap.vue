@@ -9,20 +9,18 @@
   <dv-border-box-13 class="lr_titles">
     <div class="item_title" v-if="title !== ''">
       <ul class="horizontal-list">
-        <li v-for="i in options.leftArray">{{i}}</li>
+        <li v-for="i in localOptions.leftArray" @click="exchangeTitle2Item(i, 'left')">{{ i }}</li>
       </ul>
       <div class="left">
       </div>
-      
-      <span class="title-inner"> &nbsp;&nbsp;{{ title }}&nbsp;&nbsp; </span>
+
+      <span class="title-inner"> &nbsp;&nbsp;{{ localTitle }}&nbsp;&nbsp; </span>
       <div class="right"></div>
       <ul class="horizontal-list">
-        <li v-for="i in options.rightArray">{{i}}</li>
+        <li v-for="i in localOptions.rightArray" @click="exchangeTitle2Item(i, 'right')">{{ i }}</li>
       </ul>
     </div>
-    <div
-      :class="title !== '' ? 'item_title_content' : 'item_title_content_def'"
-    >
+    <div :class="title !== '' ? 'item_title_content' : 'item_title_content_def'">
       <slot></slot>
     </div>
   </dv-border-box-13>
@@ -31,25 +29,52 @@
 <script>
 export default {
   data() {
-    return {};
+    return {
+      localTitle: this.title,
+      localOptions: { ...this.options }
+    };
   },
   props: {
     title: {
       type: String,
       default: () => "",
     },
-    options:{
-      type:Object,
-      default:{
-        leftArray:[],
-        rightArray:[],  
+    options: {
+      type: Object,
+      default: {
+        leftArray: [],
+        rightArray: [],
       }
     },
   },
-  created() {},
+  created() { },
 
-  mounted() {},
-  methods: {},
+  mounted() { },
+  methods: {
+    exchangeTitle2Item(i, position) {
+      let temp = this.localTitle;
+      this.localTitle = i;
+      this.$eventBus.$emit("titleChanged",i)
+      if (position === "left") {
+        let tempOption = this.localOptions.leftArray[this.localOptions.leftArray.indexOf(i)];
+        this.localOptions.leftArray[this.localOptions.leftArray.indexOf(i)] = temp;
+      }
+      else {
+        let tempOption = this.localOptions.rightArray[this.localOptions.rightArray.indexOf(i)];
+        this.localOptions.rightArray[this.localOptions.rightArray.indexOf(i)] = temp;
+      }
+
+    }
+
+  },
+  watch: {
+    title(newTitle) {
+      this.localTitle = newTitle;
+    },
+    options(newOptions) {
+      this.localOptions = { ...newOptions };
+    }
+  }
 };
 </script>
 <style lang='scss' scoped>
@@ -59,7 +84,7 @@ $item_title_content-height: calc(100% - 38px);
 .lr_titles {
   box-sizing: border-box;
 
-:deep(.border-box-content)  {
+  :deep(.border-box-content) {
     box-sizing: border-box;
     padding: 6px 16px 0px;
   }
@@ -86,15 +111,14 @@ $item_title_content-height: calc(100% - 38px);
     .right {
       transform: rotate(180deg);
     }
+
     .title-inner {
       font-weight: 900;
       letter-spacing: 2px;
-      background: linear-gradient(
-        92deg,
-        #0072ff 0%,
-        #00eaff 48.8525390625%,
-        #01aaff 100%
-      );
+      background: linear-gradient(92deg,
+          #0072ff 0%,
+          #00eaff 48.8525390625%,
+          #01aaff 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
@@ -114,11 +138,12 @@ $item_title_content-height: calc(100% - 38px);
     padding: 0;
     margin: 0;
   }
-  
+
   .horizontal-list li {
     display: inline-block;
- 
-    margin-right: 10px; /* 添加一些间隔 */
+
+    margin-right: 10px;
+    /* 添加一些间隔 */
   }
 }
 </style>

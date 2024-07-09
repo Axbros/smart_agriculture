@@ -45,6 +45,8 @@ Vue.use(digitalFlop)
 Vue.use(capsuleChart)
 // 全局数据过滤器
 Object.keys(filters).forEach(k => Vue.filter(k, filters[k]));
+
+Vue.prototype.$eventBus = new Vue(); 
 new Vue({
   router,
   store,

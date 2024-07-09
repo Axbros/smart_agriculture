@@ -14,13 +14,26 @@ export default {
   },
   props: {},
   mounted() {
-    this.getData();
+    this.getData("e7");
+  },
+  created(){
+    this.$eventBus.$on('titleChanged', (data) => {
+        // 处理接收到的数据
+        const categoryMap={"温度":"e3","湿度":"e9","风速":"e7","气压":"e5","日照时间":"e11"}
+        const keys = Object.keys(categoryMap);
+        keys.forEach(key => {
+          if(key==data){
+            this.getData(categoryMap[key])
+          }
+        }); 
+        
+      });
   },
   methods: {
-    getData() {
+    getData(category) {
       this.pageflag = true;
       // 温度的key是e3    湿度是e9   风速e7   气压就e5  日照e11
-      climate_condition("e7").then((res) => {
+      climate_condition(category).then((res) => {
         if (res.code===200) {
           console.log(res.data)
           this.init(res.data.reverse());
