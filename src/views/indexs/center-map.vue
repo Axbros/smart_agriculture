@@ -8,9 +8,9 @@
 <template>
   <div class="centermap">
     <div class="maptitle">
-      <div class="left" v-for="i in options.leftArray">{{ i }}</div>
-      <span class="titletext">{{ title }}</span>
-      <div class="right" v-for="i in options.rightArray">{{ i }}</div>
+      <div class="left" v-for="i in localOptions.leftArray" @click="exchangeTitle2Item(i, 'left')">{{ i }}</div>
+      <span class="titletext">{{ localTitle }}</span>
+      <div class="right" v-for="i in localOptions.rightArray" @click="exchangeTitle2Item(i, 'right')">{{ i }}</div>
     </div>
     <div class="mapwrap">
       <dv-border-box-13>
@@ -38,24 +38,41 @@ export default {
     },
     options: {
       type: Object,
-      default: {
+      default: () => ({
         leftArray: [],
-        rightArray: [],
-      }
+        rightArray: []
+      })
     }
   },
   data() {
     return {
+      localTitle: this.title,
+      localOptions: { ...this.options },
       tableData: [
-       [],[]
+        [], []
       ]
     };
   },
 
   mounted() {
+
     this.getData();
   },
   methods: {
+    exchangeTitle2Item(i, position) {
+      console.log(i, position)
+      let temp = this.localTitle;
+      this.localTitle = i;
+      if (position === "left") {
+        let tempOption = this.localOptions.leftArray[this.localOptions.leftArray.indexOf(i)];
+        this.localOptions.leftArray[this.localOptions.leftArray.indexOf(i)] = temp;
+      }
+      else {
+        let tempOption = this.localOptions.rightArray[this.localOptions.rightArray.indexOf(i)];
+        this.localOptions.rightArray[this.localOptions.rightArray.indexOf(i)] = temp;
+      }
+
+    },
     getData() {
       centerRequest().then((res) => {
         if (res.code === 200) {
