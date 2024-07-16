@@ -15,7 +15,7 @@
             <div class="flex">
               <div class="info">
                 <span class="labels ">摄像头ID：</span>
-                <span class="contents primary"> 1639</span>
+                <span class="contents primary"> {{resultInfo.deviceId}}</span>
               </div>
               <div class="info" style="margin-left:36px">
                 <span class="labels">地址：</span>
@@ -28,7 +28,7 @@
 
               <div class="info">
                 <span class="labels"> 茶芽占比识别：</span>
-                <span class="contents secondary" > 时间：2024-5-28 13:47 嫩芽占比12.5%</span>
+                <span class="contents secondary" > 时间：{{getCurrentTime()}} 嫩芽占比{{ resultInfo.burgeen }}%</span>
               </div>
 
             </div>
@@ -36,7 +36,7 @@
 
               <div class="info">
                 <span class="labels">人员闯入识别：</span>
-                <span class="contents secondary" >  时间：2024-5-28 13:47 发现相关人员进入茶园，请及时核查</span>
+                <span class="contents secondary" >  时间：{{getCurrentTime()}} 发现{{ resultInfo.person }}名相关人员进入茶园</span>
               </div>
             </div>
 
@@ -44,7 +44,7 @@
 
               <div class="info">
                 <span class="labels">农机作业识别：</span>
-                <span class="contents secondary" > 时间：2024-5-28 13:47 发现背篓/农药桶，请及时核查</span>
+                <span class="contents secondary" > 时间：{{getCurrentTime()}} 发现{{ resultInfo.machine }}个背篓/农药桶</span>
               </div>
             </div>
 
@@ -52,7 +52,7 @@
 
               <div class="info">
                 <span class="labels">烟雾防火识别：</span>
-                <span class="contents secondary" > 时间：2024-5-28 13:47  未发现烟雾</span>
+                <span class="contents secondary" > 时间：{{getCurrentTime()}}  发现{{ resultInfo.fire }}例烟雾</span>
               </div>
             </div>
           </div>
@@ -70,7 +70,20 @@ import vueSeamlessScroll from 'vue-seamless-scroll'  // vue2引入方式
 import Kong from '../../components/kong.vue'
 export default {
   components: { vueSeamlessScroll, Kong },
-
+  props: {
+    resultInfo: {
+      type: Object,
+      default: function() {
+      return { 
+        machine: 0,
+        person: 0,
+        burgeen:0,
+        fire:0
+      };
+    }
+    },
+   
+  },
   data() {
     return {
       list: [],
@@ -98,9 +111,20 @@ export default {
   created() {
     this.getData()
   },
-
+  
   mounted() { },
   methods: {
+    getCurrentTime(){
+      const now = new Date();
+  const year = now.getFullYear();
+  const month = String(now.getMonth() + 1).padStart(2, '0');
+  const day = String(now.getDate()).padStart(2, '0');
+  const hours = String(now.getHours()).padStart(2, '0');
+  const minutes = String(now.getMinutes()).padStart(2, '0');
+  const seconds = String(now.getSeconds()).padStart(2, '0');
+
+  return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+    },
     getData() {
       this.pageflag = true
       // this.pageflag =false

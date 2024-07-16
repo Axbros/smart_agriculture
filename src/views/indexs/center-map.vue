@@ -55,33 +55,53 @@ export default {
   },
 
   mounted() {
-
     this.getData();
   },
   methods: {
     exchangeTitle2Item(i, position) {
       console.log(i, position)
+      console.log(i=="虫情监测")
+      if(i=="虫情监测"){
+        this.getData("64101FE0C750001DD00")
+      }
+      if(i=="人员监测" || i=="农机监测"){
+        this.getData("64101FE0C750001B600")
+      }
+      if(i=="苗情监测" ){
+        this.getData("64101FE0C750001DE00")
+      }else{
+        this.getData()
+      }
+      
       let temp = this.localTitle;
       this.localTitle = i;
       if (position === "left") {
-        let tempOption = this.localOptions.leftArray[this.localOptions.leftArray.indexOf(i)];
+        // let tempOption = this.localOptions.leftArray[this.localOptions.leftArray.indexOf(i)];
         this.localOptions.leftArray[this.localOptions.leftArray.indexOf(i)] = temp;
       }
       else {
-        let tempOption = this.localOptions.rightArray[this.localOptions.rightArray.indexOf(i)];
+        // let tempOption = this.localOptions.rightArray[this.localOptions.rightArray.indexOf(i)];
         this.localOptions.rightArray[this.localOptions.rightArray.indexOf(i)] = temp;
       }
 
     },
-    getData() {
-      centerRequest().then((res) => {
+    getData(deviceId="64101FE0C750001B600") {
+      centerRequest(deviceId).then((res) => {
         if (res.code === 200) {
-          var data = res.data
+          var data = res.data.data
           this.init(data)
+          var result=res.data.results
+          this.sendData(result)
         }
       })
     },
+    sendData(result) {
+        this.$emit('sendData',result);
+      },
     init(data) {
+      this.tableData=[
+        [], []
+      ]
       this.tableData[0].push({ image: data[0].afterRecognition, date: data[0].acquisitionTime })
       this.tableData[0].push({ image: data[1].afterRecognition, date: data[1].acquisitionTime })
       this.tableData[1].push({ image: data[2].afterRecognition, date: data[2].acquisitionTime })

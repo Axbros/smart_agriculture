@@ -5,7 +5,7 @@ import { getCurrentDate,xDaysAgo } from "@/utils/getToday";
 export const paramType ={
     'insectInfo':'/insect_condition/insectStress',
     'climate_condition':"/climate_condition/daqishangqing", //用户总览
-    'center':"/monitors/identifyingPhotos", //设备总览 
+    'center':"/monitors/identifyingPhotos?deviceId=", //设备总览 
     'detect_solid':"/soilMoisture/today",
     'big2':"/bigscreen/countDeviceNum", //设备提醒
     'big4':"/bigscreen/alarmNum", //报警次数
@@ -36,8 +36,8 @@ export const climate_condition=(type)=>{
     }
     return API.GET(paramType["climate_condition"],params)
 }
-export const centerRequest=()=>{
-    return API.GET(paramType["center"])
+export const centerRequest=(deviceId)=>{
+    return API.GET(paramType["center"]+deviceId)
 }
 /******************      通用增删改查       ********************* */
 /**

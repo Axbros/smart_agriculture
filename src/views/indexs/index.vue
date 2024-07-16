@@ -28,10 +28,10 @@
     </div>
     <div class="contetn_center">
     
-        <CenterMap  :options="leftBottomOption" title="魔镜慧眼" />
+        <CenterMap  :options="leftBottomOption" title="魔镜慧眼" @sendData="handleData" />
     
 
-      <ItemWrap class="contetn_center-bottom" title="AI巡园预警">
+      <ItemWrap class="contetn_center-bottom" title="AI巡园预警" :result="resultInfo">
         <CenterBottom />
       </ItemWrap>
     </div>
@@ -83,6 +83,9 @@ export default {
       centerBottomOption:{
         leftArray:['温度', '湿度'],
         rightArray:[ '气压', '日照时间']
+      },
+      resultInfo:{
+        person:1,
       }
     };
   },
@@ -94,9 +97,13 @@ export default {
   created() {
   },
 
-  mounted() { },
+  mounted() {
+    
+   },
   methods: {
-
+    handleData(data){
+      this.resultInfo=data
+    }
   },
 };
 </script>
