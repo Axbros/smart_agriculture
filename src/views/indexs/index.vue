@@ -102,7 +102,9 @@ export default {
    },
   methods: {
     handleData(data){
+      console.log(data)
       this.resultInfo=data
+    
     }
   },
 };

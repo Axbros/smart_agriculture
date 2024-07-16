@@ -91,6 +91,7 @@ export default {
           var data = res.data.data
           this.init(data)
           var result=res.data.results
+          console.log(result)
           this.sendData(result)
         }
       })
